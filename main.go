@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -22,6 +23,11 @@ var (
 const (
 	presentationURL = "https://ici.tou.tv/presentation/"
 )
+
+type dlLink struct {
+	Title string
+	URL   string
+}
 
 func main() {
 	if len(os.Args) < 2 {
@@ -40,26 +46,26 @@ func main() {
 	stopChan := make(chan bool)
 	m3u8.LaunchWorkers(w, stopChan)
 
-	outputFileName := "test"
-
-	m3u8.Debug = true
+	m3u8.Debug = false
 	var url string
 	for _, u := range urls {
-		if url, err = downloadRCCShowURL(u); err != nil {
+		if url, err = downloadRCCShowURL(u.URL); err != nil {
 			log.Printf("Failed to download %s - %v\n", u, err)
 		}
-		fmt.Println("->", url)
+		if fileExists(fmt.Sprintf("%s.mp4", u.Title)) {
+			log.Printf("%s already downloaded\n", u.Title)
+			continue
+		}
+		fmt.Printf("-> Downloading %s | %s\n", u.Title, u.URL)
 		job := &m3u8.WJob{
 			Type:          m3u8.ListDL,
 			URL:           url,
 			SkipConverter: false,
 			DestPath:      ".",
-			Filename:      outputFileName}
+			Filename:      u.Title}
 		m3u8.DlChan <- job
-		// TODO: set filename and not break
-		break
 	}
-	time.Sleep(1 * time.Minute)
+	time.Sleep(30 * time.Second)
 	close(m3u8.DlChan)
 	w.Wait()
 }
@@ -104,13 +110,12 @@ func rccMediaURL(id string) (string, error) {
 	}
 	var data RCCURLJSON
 	if err = json.NewDecoder(res.Body).Decode(&data); err != nil {
-		fmt.Println(url)
 		return "", err
 	}
 	return data.URL, nil
 }
 
-func listRCCEpisodesFromURL(url string) ([]string, error) {
+func listRCCEpisodesFromURL(url string) ([]dlLink, error) {
 	res, err := http.Get(url)
 	if err != nil {
 		return nil, err
@@ -126,14 +131,15 @@ func listRCCEpisodesFromURL(url string) ([]string, error) {
 		return nil, err
 	}
 
-	links := []string{}
+	links := []dlLink{}
 	var link string
 	// Find the review items
 	doc.Find(".medianet-content").Each(func(i int, s *goquery.Selection) {
 		// For each item found, get the band and title
 		link, _ = s.Attr("href")
 		if len(link) > 0 {
-			links = append(links, link)
+			title := strings.TrimSpace(s.ChildrenFiltered("div.vigette-content-info").ChildrenFiltered("h3.title").Text())
+			links = append(links, dlLink{Title: title, URL: link})
 		}
 	})
 	return links, nil
@@ -512,4 +518,11 @@ type PresentationResponse struct {
 	HasNewEpisodes   bool        `json:"HasNewEpisodes"`
 	ExcludeDevice    interface{} `json:"ExcludeDevice"`
 	LogoTargettingID interface{} `json:"LogoTargettingId"`
+}
+
+func fileExists(path string) bool {
+	if _, err := os.Stat(path); err == nil {
+		return true
+	}
+	return false
 }

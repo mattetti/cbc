@@ -1,0 +1,33 @@
+{
+	"ImportPath": "github.com/mattetti/cbc",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Deps": [
+		{
+			"ImportPath": "github.com/PuerkitoBio/goquery",
+			"Comment": "v1.4.0-2-gea1bc64",
+			"Rev": "ea1bc64a63088ac2bbf1a2edcae38413794a7710"
+		},
+		{
+			"ImportPath": "github.com/andybalholm/cascadia",
+			"Comment": "v1.0.0",
+			"Rev": "901648c87902174f774fac311d7f176f8647bdaa"
+		},
+		{
+			"ImportPath": "github.com/hailiang/gosocks",
+			"Rev": "b913be938dea98d094c3942c23e85f8dd42021ff"
+		},
+		{
+			"ImportPath": "github.com/mattetti/m3u8Grabber/m3u8",
+			"Rev": "7e0a3554aa57898802c46fa2829bb13c66fa101a"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "d41e8174641f662c5a2d1c7a5f9e828788eb8706"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "d41e8174641f662c5a2d1c7a5f9e828788eb8706"
+		}
+	]
+}

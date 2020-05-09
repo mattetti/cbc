@@ -1,0 +1,11 @@
+github.com/PuerkitoBio/goquery v0.0.0-20180324162212-ea1bc64a6308 h1:qivg1qdqfe8AOu8rgSFvkBNEEvJ9AWSDtNFiuy+D5g8=
+github.com/PuerkitoBio/goquery v0.0.0-20180324162212-ea1bc64a6308/go.mod h1:T9ezsOHcCrDCgA8aF1Cqr3sSYbO/xgdy8/R/XiIMAhA=
+github.com/andybalholm/cascadia v1.0.0 h1:hOCXnnZ5A+3eVDX8pvgl4kofXv2ELss0bKcqRySc45o=
+github.com/andybalholm/cascadia v1.0.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
+github.com/hailiang/gosocks v0.0.0-20141219140937-b913be938dea h1:iz/d/CgErT0CJIo/vGCd6rXOMUUWSd5c1iVCJI9x6DA=
+github.com/hailiang/gosocks v0.0.0-20141219140937-b913be938dea/go.mod h1:Afnr5iK49yFUjETE+6wdlF+J0txZI1BLvpVtxsNqVgQ=
+github.com/mattetti/m3u8Grabber v0.0.0-20180526172854-7e0a3554aa57 h1:nCRRJozRoRSRv0wpQPI/ueBF6eAKEE9ZUaiS05Y1s2w=
+github.com/mattetti/m3u8Grabber v0.0.0-20180526172854-7e0a3554aa57/go.mod h1:69Rzxjzfk/G3kmWucFveIpNe8D2CCAyXY+12Q209t2I=
+golang.org/x/net v0.0.0-20180218175443-cbe0f9307d01/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/net v0.0.0-20180418062111-d41e8174641f h1:tjcOs1O1Wx/iE6xMt3j3HE6+OUjdqiwvSpcgM5YjGRk=
+golang.org/x/net v0.0.0-20180418062111-d41e8174641f/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=

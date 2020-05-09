@@ -46,7 +46,7 @@ func main() {
 	stopChan := make(chan bool)
 	m3u8.LaunchWorkers(w, stopChan)
 
-	m3u8.Debug = false
+	m3u8.Debug = true
 	var url string
 	for _, u := range urls {
 		if url, err = downloadRCCShowURL(u.URL); err != nil {
@@ -87,8 +87,8 @@ func downloadRCCShowURL(u string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	s := doc.Find(".audio-video-console").First()
-	val, _ := s.Attr("data-console-info")
+	s := doc.Find("#jeunesse-video-media").First()
+	val := s.Text()
 
 	var data RCCEpisodeJSON
 	if err = json.Unmarshal([]byte(val), &data); err != nil {
@@ -137,6 +137,9 @@ func listRCCEpisodesFromURL(url string) ([]dlLink, error) {
 	doc.Find(".medianet-content").Each(func(i int, s *goquery.Selection) {
 		// For each item found, get the band and title
 		link, _ = s.Attr("href")
+		if link[0] == '/' {
+			link = fmt.Sprintf("https://%s%s", res.Request.URL.Host, link)
+		}
 		if len(link) > 0 {
 			title := strings.TrimSpace(s.ChildrenFiltered("div.vigette-content-info").ChildrenFiltered("h3.title").Text())
 			links = append(links, dlLink{Title: title, URL: link})
